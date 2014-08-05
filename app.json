@@ -1,0 +1,45 @@
+{
+  "name": "Starboard",
+  "description": "Starboard takes staff onboarding tasks and turns them into Trello boards for shared task progress tracking and visibility.",
+  "keywords": [
+    "trello",
+    "onboarding",
+    "offboarding",
+    "crossboarding",
+    "productivity"
+  ],
+  "website": "http://github.com/heroku/starboard",
+  "repository": "http://github.com/heroku/starboard",
+  "logo": "https://cloud.githubusercontent.com/assets/483012/3819730/31b19ffa-1cee-11e4-9a27-8b5e62ebf7f2.png",
+  "success_url": "/setup",
+  "scripts": {},
+  "env": {
+    "GITHUB_TOKEN": {
+      "description": "A GitHub token to access the docs repo, at least [repo] scope",
+      "value": "",
+      "required": true
+    },
+    "GITHUB_REPO": {
+      "description": "The repository containing the guides. Use the user/repo form.",
+      "value": "",
+      "required": true
+    },
+    "HOOK_TOKEN": {
+      "description": "The hook secret for GitHub webhooks",
+      "generator": "secret"
+    },
+    "TRELLO_ORGANIZATION": {
+      "description": "The trello organization where boards will be created",
+      "value": "",
+      "required": true
+    },
+    "TRELLO_KEY": {
+      "description": "The trello API key",
+      "value": "",
+      "required": true
+    }
+  },
+  "addons": [
+    "memcachier"
+  ]
+}

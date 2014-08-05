@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <title>Starboard</title>
+      <%= stylesheet_tag 'screen' %>
+  </head>
+
+  <body data-organization="<%= organization %>" data-token="<%= token %>">
+      <header>
+      <img src="../img/logo.svg" alt="Logo">
+      <h1>Starboard</h1>
+      <h2>People come, people go.</h2>
+      </header>
+      <section class="controls">
+        <p>
+          You still have a few last steps before you can use Starboard.
+        </p>
+
+        <header><h3>Setup Config vars</h3></header>
+        <p>
+          Have you correctly set the following configuration variables to their value?
+          If not, just follow the guide.
+        </p>
+        <dl>
+          <dt>TRELLO_ORGANIZATION</dt><dd>The org where the boards are created.</dd>
+          <dt>TRELLO_KEY</dt><dd>Please check <a href=https://trello.com/1/appKey/generate>Trello API key generator</a> for your key</dd>
+          <dt>GITHUB_TOKEN</dt><dd>Please check <a href=https://help.github.com/articles/creating-an-access-token-for-command-line-use>here</a> and use at least private repo scope if your repo is private.</dd>
+          <dt>GITHUB_REPO</dt><dd>The GitHub repository containing the docs. It should be in the form of name/repo.</dd>
+        </dl>
+        <header><h3>Setup documentation, if not done yet.</h3></header>
+        <p>
+          Take a look at <a href=https://github.com/heroku/starboard-docs-template>our template repository</a>.
+        </p>
+        <header><h3>Register a Webhook on your GitHub documentation repository</h3></header>
+        <p>
+          Auto update guides for your teams each time you push to github.<br/>
+          <a href="/guides?t=<%= ENV["HOOK_TOKEN"] %>">copy this hook url</a>
+        </p>
+
+        <header><h3>Create boards</h3></header>
+        <p>
+          Enjoy using <a href=/ >Starboard</a> and send us feedback.
+        </p>
+      </section>
+  </body>
+</html>
+
