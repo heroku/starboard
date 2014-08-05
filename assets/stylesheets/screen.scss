@@ -1,0 +1,161 @@
+@import "colors";
+@import "defaults";
+@import "bourbon/bourbon";
+@import "neat/neat";
+@import "bitters/bitters";
+
+
+@include font-face($font-family: "Benton Sans",
+                   $file-path: "../fonts/bentonsans-book",
+                   $weight: 400,
+                   $style: normal);
+
+@include font-face($font-family: "Benton Sans",
+                   $file-path: "../fonts/bentonsans-regular",
+                   $weight: 500,
+                   $style: normal);
+
+@include font-face($font-family: "Benton Sans",
+                   $file-path: "../fonts/bentonsans-medium",
+                   $weight: 600,
+                   $style: normal);
+
+
+
+
+* {
+    @include box-sizing(border-box);
+}
+
+
+a, a:visited {
+    color: $color-peter-river;
+    text-decoration: none;
+    font-weight: 700;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+body > header {
+    @include outer-container;
+    text-align: center;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    h1 {
+        @include span-columns(12);
+        font-weight: 500;
+        margin-bottom: 0;
+        text-transform: uppercase;
+        margin-top: 0.5em;
+        color: $primary;
+    }
+    h2 {
+        @include span-columns(12);
+        font-weight: 400;
+        color: #bbb;
+        font-size: 1.2em;
+    }
+}
+
+.controls {
+    @include outer-container;
+    max-width: 32em;
+    p {
+        margin-bottom: 2em;
+    }
+    label {
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    input {
+        font-size: 1.5em;
+    }
+
+    input.button {
+        width: 100%;
+    }
+}
+
+.working {
+    p {
+        font-weight: 400;
+        color: $color-silver;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.9em;
+        margin-bottom: 0;
+    }
+
+    progress {
+        margin: 0.5em auto;
+        display: block;
+    }
+
+    &.hidden {
+        display: none;
+    }
+}
+
+.loading {
+    text-align: center;
+    padding-top: 3em;
+    &.hidden {
+        display: none;
+    }
+}
+
+.spinner {
+    margin: 10px auto;
+    width: 50px;
+    height: 30px;
+    text-align: center;
+    font-size: 10px;
+}
+
+.spinner > div {
+    background-color: $primary;
+    height: 100%;
+    width: 6px;
+    display: inline-block;
+    -webkit-animation: stretchdelay 1.0s infinite ease-in-out;
+    animation: stretchdelay 1.0s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s;
+}
+
+.spinner .rect3 {
+    -webkit-animation-delay: -0.8s;
+    animation-delay: -0.8s;
+}
+
+.spinner .rect4 {
+    -webkit-animation-delay: -0.7s;
+    animation-delay: -0.7s;
+}
+
+.spinner .rect5 {
+    -webkit-animation-delay: -0.6s;
+    animation-delay: -0.6s;
+}
+
+@-webkit-keyframes stretchdelay {
+    0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
+    20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes stretchdelay {
+    0%, 40%, 100% {
+        transform: scaleY(0.4);
+        -webkit-transform: scaleY(0.4);
+    }  20% {
+        transform: scaleY(1.0);
+        -webkit-transform: scaleY(1.0);
+    }
+}
+
+@import "chosen";

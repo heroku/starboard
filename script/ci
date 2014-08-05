@@ -1,0 +1,8 @@
+#!/bin/sh
+# Usage: script/ci
+# Run the test suite on Travis.
+set -e
+
+export RACK_ENV="test"
+
+bundle exec rake test
