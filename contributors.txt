@@ -1,0 +1,5 @@
+# Contributors
+
+- Idan Gazit <idan@heroku.com>
+- Peter van Hardenberg <pvh@heroku.com>
+- Yannick Schutz <yannick@heroku.com>
