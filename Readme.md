@@ -2,7 +2,7 @@
 
 **WARNING: This code is an early-access release; we wrote it for ourselves and it still harbors a lot of Herokuisms. You will probably have to adapt it to your needs if you want to use it.**
 
-Starboard is a tool which creates Trello boards for tracking the various tasks necessary when onboarding, offboarding, or crossboarding employees. We use it extensively within Heroku.
+Starboard is a tool which creates Trello boards for tracking the various tasks necessary when onboarding, offboarding, or crossboarding employees. We use Trello extensively within Heroku, and Starboard makes it easy to manage HR transitions from inside Trello.
 
 The tasks themselves are authored as markdown files. When you run starboard, it resolves which tasks are relevant for the given employee and target team, and creates a new Trello board from the relevant markdown files.
 
@@ -10,7 +10,7 @@ Because the files are markdown (and stored in git), they're accessible to everyo
 
 ### How do I use it to create a Trello board?
 
-Go to your app, log through Trello, fill the form and wait to be redirected to the newly created board.
+Go to your app, authorize with Trello, fill out the form and twiddle your thumbs while Starboard does its thing. When it finishes, you'll be redirected to your shiny new board.
 
 ### Where is it getting the data from?
 
