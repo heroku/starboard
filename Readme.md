@@ -10,7 +10,7 @@ Because the files are markdown (and stored in git), they're accessible to everyo
 
 ### How do I use it to create a Trello board?
 
-Go to your app, authorize with Trello, fill out the form and twiddle your thumbs while Starboard does its thing. When it finishes, you'll be redirected to your shiny new board.
+Go to your deployed instance of Starboard, authorize with Trello, fill out the form and twiddle your thumbs while Starboard does its thing. When it finishes, you'll be redirected to your shiny new board.
 
 ### Where is it getting the data from?
 
