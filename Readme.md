@@ -28,6 +28,10 @@ Starboard limits access by means of checking that the user has access to a speci
 
 ### Deploy the app
 
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+#### OR
+
 You can use the old way and
 - Clone the code
 - Create an app
