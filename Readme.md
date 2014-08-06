@@ -1,4 +1,4 @@
-# Starboard [![Build Status](https://magnum.travis-ci.com/heroku/starboard.svg?token=sCaMa7HeG4812XfRVVH2&branch=master)](https://magnum.travis-ci.com/heroku/starboard)
+# Starboard [![Build Status](https://travis-ci.org/heroku/starboard.svg)](https://travis-ci.org/heroku/starboard)
 
 **WARNING: This code is an early-access release; we wrote it for ourselves and it still harbors a lot of Herokuisms. You will probably have to adapt it to your needs if you want to use it.**
 
