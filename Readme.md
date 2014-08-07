@@ -46,6 +46,7 @@ You will also have to set a few configuration variables.
 - `TRELLO_KEY` The trello API key that can be found at [https://trello.com/1/appKey/generate](https://trello.com/1/appKey/generate)
 - `GITHUB_TOKEN` A GitHub access token to get the guides out of your repository. You can create an OAuth app and generate a token or use a personal access token. Please check [https://help.GitHub.com/articles/creating-an-access-token-for-command-line-use](https://help.GitHub.com/articles/creating-an-access-token-for-command-line-use) and use a private repo if you want to keep your content private.
 - `GITHUB_REPO` An `orgname/reponame` identifier of the GitHub repository containing your guides.
+- `HOOK_TOKEN` A generated secret used to create a web hook on GitHub to auto update the guides.
 
 ### Register a Webhook on GitHub
 
