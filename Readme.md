@@ -8,6 +8,12 @@ The tasks themselves are authored as markdown files. When you run starboard, it 
 
 Because the files are markdown (and stored in git), they're accessible to everyone in the company. Improvements to onboarding can come from anyone in the form of a pull request to the relevant guide.
 
+### What does the UI look like?
+
+Well, at Heroku, the frontend for creating boards looks like this:
+
+![Starboard Web UI Screenshot](http://f.cl.ly/items/0V1p3d0u2K0k0j1y3B3X/Screen%20Shot%202014-08-14%20at%2011.46.07.png)
+
 ### How do I use it to create a Trello board?
 
 Go to your deployed instance of Starboard, authorize with Trello, fill out the form and twiddle your thumbs while Starboard does its thing. When it finishes, you'll be redirected to your shiny new board.
