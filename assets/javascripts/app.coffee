@@ -69,7 +69,7 @@ prepareForm = (data) ->
   teamnames = _.map(root.starboard.teams.all(-> true), (team) ->
     {"name": team.model.id, "slug": team.model.slug}
   )
-  $('.controls').append(ich.controls({'teams': teamnames}))
+  $('.controls').append(ich.controls({'teams': teamnames, 'onboarding_sources': starboard.information.onboarding_sources}))
   $('#date').val(new Date().toDateInputValue())
 
   # hacky workaround to enable HTML5 Validation errors to appear with chosen
