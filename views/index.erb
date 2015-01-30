@@ -63,6 +63,13 @@
         </select>
     </p>
     <p>
+      {{#options}}
+        <label for="{{id}}">
+          <input type="checkbox" id="{{id}}" name="options[]" value="{{id}}"> {{title}}
+        </label>
+      {{/options}}
+    </p>
+    <p>
         <input class="button" type="submit" value="Create Trello Board">
         <div class="working hidden">
             <div class="spinner">

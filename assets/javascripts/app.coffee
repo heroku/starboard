@@ -69,7 +69,10 @@ prepareForm = (data) ->
   teamnames = _.map(root.starboard.teams.all(-> true), (team) ->
     {"name": team.model.id, "slug": team.model.slug}
   )
-  $('.controls').append(ich.controls({'teams': teamnames, 'onboarding_sources': starboard.information.onboarding_sources}))
+  $('.controls').append ich.controls
+    'teams': teamnames,
+    'onboarding_sources': starboard.information.onboarding_sources
+    'options': starboard.information.options
   $('#date').val(new Date().toDateInputValue())
 
   # hacky workaround to enable HTML5 Validation errors to appear with chosen
@@ -277,7 +280,7 @@ fillBoard = (trelloBoard, lists) ->
   )
   .then(->
     log.debug("Done building board: #{trelloBoard.url}")
-    # window.location.href = trelloBoard.url
+    window.location.href = trelloBoard.url
   ).catch((error) ->
     abortCreation("Unable to build board!", error)
   )
@@ -404,6 +407,9 @@ renderMarkdown = (rawmd) ->
 getValues = ->
   boarding_type = $("#boarding-type").val().split("-")[0]
   recruiting_source = $("#boarding-type").val().split("-")[1]
+  options = _.map($("[name='options[]']:checked"), (e) ->
+    $(e).val()
+  )
 
   {
     "name": $("#name").val(),
@@ -413,7 +419,8 @@ getValues = ->
     "employment_mode": $("#employment-mode").val(),
     "recruiting_source": recruiting_source,
     "boarding_type": boarding_type,
-    "tags": [recruiting_source],
+    "options": options,
+    "tags": _.union([recruiting_source], options),
   }
 
 $ ->
