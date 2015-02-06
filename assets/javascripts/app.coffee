@@ -71,8 +71,8 @@ prepareForm = (data) ->
   )
   $('.controls').append ich.controls
     'teams': teamnames,
-    'onboarding_sources': starboard.information.onboarding_sources
-    'options': starboard.information.options
+    'onboarding_sources': (starboard.information.onboarding_sources || [])
+    'options': (starboard.information.options || [])
   $('#date').val(new Date().toDateInputValue())
 
   # hacky workaround to enable HTML5 Validation errors to appear with chosen
