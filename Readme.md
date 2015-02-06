@@ -24,7 +24,7 @@ Starboard depends on a specially-structured GitHub repository which contains the
 
 ## Starboard on Heroku
 
-First, you'll need to create a GitHub repository containing the guides themselves. More information about the format of this repository is available as part of the [template repository][1].
+First, you'll need to create a GitHub repository containing the guides themselves. [A template dir is provided][1]. More information about the format of this repository is available in [docs/guides.md][3].
 
 ### Security
 
@@ -82,3 +82,4 @@ curl -vvv -X POST -H "Content-type: application/json" -u <USERNAME> -H "X-GitHub
 
 [1]: https://GitHub.com/heroku/starboard-docs-template
 [2]: https://developer.GitHub.com/webhooks/creating/
+[3]: docs/guides.md

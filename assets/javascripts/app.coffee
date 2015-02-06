@@ -7,7 +7,6 @@ Date.prototype.toDateInputValue = ->
   local.setMinutes(this.getMinutes() - this.getTimezoneOffset())
   local.toJSON().slice(0,10)
 
-
 String.prototype.capitalize = ->
   this[0].toUpperCase() + this[1..-1].toLowerCase()
 
@@ -30,13 +29,11 @@ $.getJSONAsync = (path) ->
 $.getAsync = (path) ->
   Promise.resolve($.get(path))
 
-
 initChosen = ->
   $('select').each((index) ->
     $(this).chosen({width: "100%"})
     this.setAttribute(
       'style', 'display:visible; position:absolute; clip:rect(0,0,0,0)'))
-
 
 authorize = (interactive = false) ->
   log.debug("Authorize: %o", interactive)
@@ -72,7 +69,10 @@ prepareForm = (data) ->
   teamnames = _.map(root.starboard.teams.all(-> true), (team) ->
     {"name": team.model.id, "slug": team.model.slug}
   )
-  $('.controls').append(ich.controls({'teams': teamnames}))
+  $('.controls').append ich.controls
+    'teams': teamnames,
+    'onboarding_sources': (starboard.information.onboarding_sources || [])
+    'options': (starboard.information.options || [])
   $('#date').val(new Date().toDateInputValue())
 
   # hacky workaround to enable HTML5 Validation errors to appear with chosen
@@ -207,6 +207,7 @@ resetProgress = (lists) ->
 createBoard = (lists) ->
   log.debug("Creating board…")
   formdata = getValues()
+  root.starboard.formdata = formdata
   resetProgress(lists)
 
   # create the trello board
@@ -231,8 +232,6 @@ initBoard = (lists) ->
       log.debug("Trello board created and lists removed")
       fillBoard(board, lists))
 
-
-
 # remove default lists in a generated board
 removeLists = (lists) ->
   log.debug("Removing default lists…")
@@ -241,7 +240,6 @@ removeLists = (lists) ->
   )
   # When all of the removal XHRs succeed...
   Promise.all(promises)
-
 
 # Given an array of lists, sort them regarding the lists_order in information.json
 sortedLists = (lists) ->
@@ -291,16 +289,25 @@ fillBoard = (trelloBoard, lists) ->
 # given a list, create the cards
 createCards = (trelloList, list) ->
   promises = _.map(list.cards, (card, index) ->
-    Trello.postAsync("/lists/#{trelloList.id}/cards",
-        { 'name': card.name, 'desc': card.description, 'pos': index })
-    .then((trelloCard) ->
-      log.debug("Created card '#{card.name}'")
-      root.starboard.progress += 1
-      $('progress').attr('value', root.starboard.progress)
-      createChecklists(trelloCard, card)
-    ).catch((reason) ->
-      log.error("Unable to create card '#{card.name}")
-    )
+
+    name = card.name.replace(/\[(.*)\]/, '')
+    tags = card.name.replace(/([^\[]*)(\[(.*)\])?/, '$3').split(" ").filter((e) -> e)
+    tags = _.map(tags, (t) -> t.toLowerCase())
+    # SKIP if if choosen tags are not covering the ones for this card
+    if _.difference(tags, root.starboard.formdata.tags).length != 0
+      log.info("skipped",name, tags)
+      return
+    else
+      Trello.postAsync("/lists/#{trelloList.id}/cards",
+          { 'name': name, 'desc': card.description, 'pos': index })
+      .then((trelloCard) ->
+        log.debug("Created card '#{name}'")
+        root.starboard.progress += 1
+        $('progress').attr('value', root.starboard.progress)
+        createChecklists(trelloCard, card)
+      ).catch((reason) ->
+        log.error("Unable to create card '#{name}")
+      )
   )
   Promise.all(promises)
 
@@ -308,16 +315,26 @@ createCards = (trelloList, list) ->
 # given a card, create the checklists
 createChecklists = (trelloCard, card) ->
   promises = _.map(card.checklists, (checklist, index) ->
-    Trello.postAsync("/cards/#{trelloCard.id}/checklists",
-      { "value": null, "name": checklist.name, 'pos': index })
-    .then((trelloChecklist) ->
-      log.debug("Created checklist '#{checklist.name}'")
-      root.starboard.progress += 1
-      $('progress').attr('value', root.starboard.progress)
-      createCheckItems(trelloChecklist, checklist)
-    ).catch((reason) ->
-      log.error("Unable to create checklist '#{checklist.name}")
-    )
+    name = checklist.name.replace(/\[(.*)\]/, '')
+    tags = checklist.name.replace(/([^\[]*)(\[(.*)\])?/, '$3').split(" ").filter((e) -> e)
+    tags = _.map(tags, (t) -> t.toLowerCase())
+    if tags.length > 0
+      log.info("has many tags", tags)
+    # SKIP if if choosen tags are not covering the ones for this card
+    if _.difference(tags, root.starboard.formdata.tags).length != 0
+      log.info("skipped",name, tags)
+      return
+    else
+      Trello.postAsync("/cards/#{trelloCard.id}/checklists",
+        { "value": null, "name": name, 'pos': index })
+      .then((trelloChecklist) ->
+        log.debug("Created checklist '#{name}'")
+        root.starboard.progress += 1
+        $('progress').attr('value', root.starboard.progress)
+        createCheckItems(trelloChecklist, checklist)
+      ).catch((reason) ->
+        log.error("Unable to create checklist '#{name}")
+      )
   )
   Promise.all(promises)
 
@@ -388,16 +405,23 @@ renderMarkdown = (rawmd) ->
 
 # Get the values from the form fields
 getValues = ->
+  boarding_type = $("#boarding-type").val().split("-")[0]
+  recruiting_source = $("#boarding-type").val().split("-")[1]
+  options = _.map($("[name='options[]']:checked"), (e) ->
+    $(e).val()
+  )
+
   {
     "name": $("#name").val(),
     "date": $("#date").val(),
     "team": $("#team-name").val(),
     "work_site": $("#work-site").val(),
     "employment_mode": $("#employment-mode").val(),
-    "recruiting_source": $("#recruiting-source").val(),
-    "boarding_type": $("#boarding-type").val(),
+    "recruiting_source": recruiting_source,
+    "boarding_type": boarding_type,
+    "options": options,
+    "tags": _.union([recruiting_source], options),
   }
-
 
 $ ->
   log.enableAll()

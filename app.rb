@@ -34,7 +34,7 @@ class App < Sinatra::Base
             oauth: { id: ENV["HEROKU_OAUTH_ID"], secret: ENV["HEROKU_OAUTH_SECRET"] },
             secret: ENV["HEROKU_BOUNCER_SECRET"],
             herokai_only: true,
-            skip: ->(env) { ENV["HEROKAI_ONLY"] != "true"}
+            skip: ->(env) { ENV["HEROKAI_ONLY"] != "true" || env['PATH_INFO'] == '/guides' }
   end
 
   Excon.defaults[:middlewares] << Excon::Middleware::RedirectFollower

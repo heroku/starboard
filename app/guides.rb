@@ -23,7 +23,7 @@ class Guides
       Zip::File.open(guides_file.path) do |io|
         io.each do |entry|
           filename = entry.name.split('/')[1..-1].join('/')
-          next if entry.directory? 
+          next if entry.directory?
           refreshed_guides[:guides] << filename
           cache.set(filename, entry.get_input_stream.read)
         end
@@ -46,6 +46,7 @@ class Guides
   end
 
   def zip_response
-    http_client.get("https://:#{ENV['GITHUB_TOKEN']}@api.github.com/repos/#{ENV['GITHUB_REPO']}/zipball/master")
+    branch = ENV['GITHUB_BRANCH'] || 'master'
+    http_client.get("https://:#{ENV['GITHUB_TOKEN']}@api.github.com/repos/#{ENV['GITHUB_REPO']}/zipball/#{branch}")
   end
 end
