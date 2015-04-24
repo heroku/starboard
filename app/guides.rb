@@ -47,6 +47,6 @@ class Guides
 
   def zip_response
     branch = ENV['GITHUB_BRANCH'] || 'master'
-    http_client.get("https://:#{ENV['GITHUB_TOKEN']}@api.github.com/repos/#{ENV['GITHUB_REPO']}/zipball/#{branch}")
+    http_client.get("https://#{ENV['GITHUB_USER']}:#{ENV['GITHUB_TOKEN']}@api.github.com/repos/#{ENV['GITHUB_REPO']}/zipball/#{branch}")
   end
 end
