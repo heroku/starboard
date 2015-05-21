@@ -259,37 +259,47 @@ reorderLists = (board) ->
     promise
   )
 
-# Given a board, create the lists
-fillBoard = (trelloBoard, lists) ->
-  log.debug("Creating lists…")
 
-  promises = _.map(sortedLists(lists), (list, index) =>
+# Dream Flow
+fillBoard = (trelloBoard, lists) ->
+  Promise.map(sortedLists(lists), (list) =>
     Trello.postAsync("/board/#{trelloBoard.id}/lists", {'name': list.name, pos: "bottom" })
     .then((trelloList) ->
-        log.debug("Created list '#{list.name}'", trelloList)
-        root.starboard.progress += 1
-        $('progress').attr('value', root.starboard.progress)
-        createCards(trelloList, list)
-    ).catch(-> log.error("Unable to create list '#{list.name}"))
-  )
-  p = Promise.all(promises)
-  # Reordering the board sequentially to be sure it is correct due to pos: bottom
-  p.then(->
+      log.debug("Created list '#{list.name}'", trelloList)
+      root.starboard.progress += 1
+      $('progress').attr('value', root.starboard.progress)
+      trelloList.cards = list.cards
+      trelloList)
+  ).then( (lists) =>
+    console.log("lists", lists)
+    cards = []
+    for list in lists
+      cards = cards.concat createCards(list)
+    Promise.all(cards)
+  ).then((cards) =>
+    console.log("cards", cards)
+    checkLists = []
+    for card in cards
+      checkLists = checkLists.concat createCheckLists(card)
+    Promise.all(checkLists)
+  ).then((checkLists) =>
+    console.log("checkLists", checkLists)
+    items = []
+    for checkList in checkLists
+      items = items.concat createCheckItems(checkList)
+    Promise.all(items)
+  ).then(->
     log.debug("Ordering the lists", lists)
     reorderLists(trelloBoard)
-  )
-  .then(->
+  ).then(->
     log.debug("Done building board: #{trelloBoard.url}")
-    window.location.href = trelloBoard.url
+    # window.location.href = trelloBoard.url
   ).catch((error) ->
     abortCreation("Unable to build board!", error)
   )
 
-
-# given a list, create the cards
-createCards = (trelloList, list) ->
-  promises = _.map(list.cards, (card, index) ->
-
+createCards = (list) ->
+  _.map(list.cards, (card, index) ->
     name = card.name.replace(/\[(.*)\]/, '')
     tags = card.name.replace(/([^\[]*)(\[(.*)\])?/, '$3').split(" ").filter((e) -> e)
     tags = _.map(tags, (t) -> t.toLowerCase())
@@ -298,23 +308,21 @@ createCards = (trelloList, list) ->
       log.info("skipped",name, tags)
       return
     else
-      Trello.postAsync("/lists/#{trelloList.id}/cards",
+      Trello.postAsync("/lists/#{list.id}/cards",
           { 'name': name, 'desc': card.description, 'pos': index })
       .then((trelloCard) ->
         log.debug("Created card '#{name}'")
         root.starboard.progress += 1
         $('progress').attr('value', root.starboard.progress)
-        createChecklists(trelloCard, card)
+        trelloCard.checklists = card.checklists
+        trelloCard
       ).catch((reason) ->
         log.error("Unable to create card '#{name}")
       )
   )
-  Promise.all(promises)
 
-
-# given a card, create the checklists
-createChecklists = (trelloCard, card) ->
-  promises = _.map(card.checklists, (checklist, index) ->
+createCheckLists = (card) ->
+  _.map(card.checklists, (checklist, index) ->
     name = checklist.name.replace(/\[(.*)\]/, '')
     tags = checklist.name.replace(/([^\[]*)(\[(.*)\])?/, '$3').split(" ").filter((e) -> e)
     tags = _.map(tags, (t) -> t.toLowerCase())
@@ -325,33 +333,29 @@ createChecklists = (trelloCard, card) ->
       log.info("skipped",name, tags)
       return
     else
-      Trello.postAsync("/cards/#{trelloCard.id}/checklists",
+      Trello.postAsync("/cards/#{card.id}/checklists",
         { "value": null, "name": name, 'pos': index })
       .then((trelloChecklist) ->
         log.debug("Created checklist '#{name}'")
         root.starboard.progress += 1
         $('progress').attr('value', root.starboard.progress)
-        createCheckItems(trelloChecklist, checklist)
+        trelloChecklist.items = checklist.items
+        trelloChecklist
       ).catch((reason) ->
         log.error("Unable to create checklist '#{name}")
       )
   )
-  Promise.all(promises)
 
-
-# given a checklist, create the checklist items
-createCheckItems = (trelloChecklist, checklist) ->
-  promises = _.map(checklist.items, (item, index) ->
-    promise = Trello.postAsync("/checklists/#{trelloChecklist.id}/checkItems",
+createCheckItems = (checklist) ->
+  _.map(checklist.items, (item, index) ->
+    Trello.postAsync("/checklists/#{checklist.id}/checkItems",
                   { "name": item, 'pos': index })
       .then((checkItem) ->
         log.debug ("Created checkItem '#{item}'")
         root.starboard.progress += 1
         $('progress').attr('value', root.starboard.progress)
       ).catch(-> log.error("Unable to create checkItem '#{item}"))
-    promise
   )
-  Promise.all(promises)
 
 
 # JSONify raw markdown
