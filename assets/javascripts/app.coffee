@@ -270,21 +270,21 @@ fillBoard = (trelloBoard, lists) ->
       $('progress').attr('value', root.starboard.progress)
       trelloList.cards = list.cards
       trelloList)
-  ).then( (lists) =>
+  ).then( (lists) ->
     console.log("lists", lists)
     cards = []
     lists.reduce( (acc, list) ->
       acc.then( -> Promise.all(createCards(list)))
          .then( (listCards) -> cards = cards.concat(listCards))
     , Promise.resolve()).then(-> cards)
-  ).then((cards) =>
+  ).then((cards) ->
     console.log("cards", cards)
     checkLists = []
     cards.reduce( (acc, card) ->
       acc.then(-> Promise.all(createCheckLists(card)))
          .then((cardLists) -> checkLists =  checkLists.concat(cardLists))
     , Promise.resolve()).then(-> checkLists)
-  ).then((checkLists) =>
+  ).then((checkLists) ->
     console.log("checkLists", checkLists)
     items = []
     checkLists.reduce( (acc, list) ->
