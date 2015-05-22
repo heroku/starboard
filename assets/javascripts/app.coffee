@@ -273,21 +273,24 @@ fillBoard = (trelloBoard, lists) ->
   ).then( (lists) =>
     console.log("lists", lists)
     cards = []
-    for list in lists
-      cards = cards.concat createCards(list)
-    Promise.all(cards)
+    lists.reduce( (acc, list) ->
+      acc.then( -> Promise.all(createCards(list)))
+         .then( (listCards) -> cards = cards.concat(listCards))
+    , Promise.resolve()).then(-> cards)
   ).then((cards) =>
     console.log("cards", cards)
     checkLists = []
-    for card in cards
-      checkLists = checkLists.concat createCheckLists(card)
-    Promise.all(checkLists)
+    cards.reduce( (acc, card) ->
+      acc.then(-> Promise.all(createCheckLists(card)))
+         .then((cardLists) -> checkLists =  checkLists.concat(cardLists))
+    , Promise.resolve()).then(-> checkLists)
   ).then((checkLists) =>
     console.log("checkLists", checkLists)
     items = []
-    for checkList in checkLists
-      items = items.concat createCheckItems(checkList)
-    Promise.all(items)
+    checkLists.reduce( (acc, list) ->
+      acc.then(-> Promise.all(createCheckItems(list)))
+         .then((listItems) -> items = items.concat listItems)
+    , Promise.resolve()).then(-> Promise.all(items))
   ).then(->
     log.debug("Ordering the lists", lists)
     reorderLists(trelloBoard)
