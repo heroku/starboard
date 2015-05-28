@@ -26,7 +26,8 @@ class GuidesTest < MiniTest::Unit::TestCase
     guides = Guides.new(cache)
     guides.http_client = HttpClient
     guides.refresh
-    assert_equal HttpClient.args.first, "https://:github_token@api.github.com/repos/ys/markdown/zipball/master"
+    assert_equal HttpClient.args.first, "https://api.github.com/repos/ys/markdown/zipball/master"
+    assert_equal HttpClient.args.last[:headers]["Authorization"], "token github_token"
   end
 
   def cache
