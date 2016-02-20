@@ -1,13 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.3.6)
+    addressable (2.4.0)
     backports (3.6.4)
     coffee-script (2.3.0)
       coffee-script-source
       execjs
     coffee-script-source (1.7.1)
-    crack (0.4.2)
+    crack (0.4.3)
       safe_yaml (~> 1.0.0)
     dalli (2.7.2)
     dotenv (0.11.1)
@@ -17,6 +17,7 @@ GEM
     execjs (2.2.1)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
+    hashdiff (0.3.0)
     hashie (3.2.0)
     heroku-bouncer (0.4.3)
       faraday (~> 0.8)
@@ -25,6 +26,7 @@ GEM
       sinatra (~> 1.0)
     hike (1.2.3)
     jwt (1.0.0)
+    minitest (5.8.3)
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -55,7 +57,7 @@ GEM
       rack (>= 1.0)
     rake (10.3.2)
     rubyzip (1.1.6)
-    safe_yaml (1.0.3)
+    safe_yaml (1.0.4)
     sass (3.3.14)
     scrolls (0.3.8)
     sinatra (1.4.5)
@@ -88,9 +90,10 @@ GEM
       sprockets (~> 2.0)
       tilt (~> 1.1)
     tilt (1.4.1)
-    webmock (1.18.0)
+    webmock (1.24.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
+      hashdiff
 
 PLATFORMS
   ruby
@@ -100,6 +103,7 @@ DEPENDENCIES
   dotenv
   excon
   heroku-bouncer
+  minitest
   puma (= 2.16.0)
   rack-ssl
   rack-test
