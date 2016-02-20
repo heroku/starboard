@@ -1,9 +1,9 @@
 source "https://rubygems.org"
-ruby "2.1.5"
+ruby "2.3.0"
 
 gem "sinatra"
 gem "sinatra-contrib"
-gem "puma"
+gem "puma", "2.16.0"
 gem "dalli"
 gem "rubyzip"
 gem "excon"
