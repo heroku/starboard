@@ -11,7 +11,7 @@ class HttpClient
   end
 end
 
-class GuidesTest < MiniTest::Unit::TestCase
+class GuidesTest < MiniTest::Test
 
   def test_refresh
     guides = Guides.new(cache)

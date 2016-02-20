@@ -1,1 +1,4 @@
-www.sass-cache.env
+www
+.sass-cache
+.env
+vendor/gems
