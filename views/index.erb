@@ -41,12 +41,11 @@
     <p>
         <label for="boarding-type">Recruiting Source:</label>
         <select data-placeholder="Choose a boarding type" name="boarding-type" id="boarding-type" required="required">
-            <option value="onboarding">New Hire</option>
+            <option value="onboarding">Onboarding</option>
             {{#onboarding_sources}}
               <option value="onboarding-{{id}}">{{title}}</option>
             {{/onboarding_sources}}
-            <option value="crossboarding">Changing team</option>
-            <option value="offboarding">Leaving</option>
+            <option value="offboarding">Offboarding</option>
         </select>
     </p>
     <p>
