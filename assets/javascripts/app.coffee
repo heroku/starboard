@@ -304,7 +304,7 @@ fillBoard = (trelloBoard, lists) ->
 getExpectedDate = (string) ->
   expectedDateMatch = /(\+|-)(\d+)d/.exec(string)
   unless expectedDateMatch == null
-    today = new Date()
+    today = new Date(root.starboard.formdata.date)
     if expectedDateMatch[1] == "+"
       today.setDate(today.getDate() + parseInt(expectedDateMatch[2]))
     if expectedDateMatch[1] == "-"
