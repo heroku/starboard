@@ -313,7 +313,7 @@ getExpectedDate = (string) ->
 
 createCards = (list) ->
   _.map(list.cards, (card, index) ->
-    name = card.name.replace(/\[(.*)\]/, '')
+    name = card.name.replace(/\[(.*)\]/, '').replace(/(\+|-)\d+d/, '')
     tags = card.name.replace(/([^\[]*)(\[(.*)\])?/, '$3').split(" ").filter((e) -> e)
     tags = _.map(tags, (t) -> t.toLowerCase())
     expectedDate = getExpectedDate(card.name)
