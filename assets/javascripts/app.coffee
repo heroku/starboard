@@ -301,18 +301,29 @@ fillBoard = (trelloBoard, lists) ->
     abortCreation("Unable to build board!", error)
   )
 
+getExpectedDate = (string) ->
+  expectedDateMatch = /(+|-)(\d+)d/.exec(string)
+  unless expectedDateMatch == null
+    today = new Date()
+    if expectedDateMatch[1] == "+"
+      today.setDate(today.getDate() + parseInt(expectedDateMatch[2]))
+    if expectedDateMatch[1] == "-"
+      today.setDate(today.getDate() - parseInt(expectedDateMatch[2]))
+    today
+
 createCards = (list) ->
   _.map(list.cards, (card, index) ->
     name = card.name.replace(/\[(.*)\]/, '')
     tags = card.name.replace(/([^\[]*)(\[(.*)\])?/, '$3').split(" ").filter((e) -> e)
     tags = _.map(tags, (t) -> t.toLowerCase())
+    expectedDate = getExpectedDate(card.name)
     # SKIP if if choosen tags are not covering the ones for this card
     if _.difference(tags, root.starboard.formdata.tags).length != 0
       log.info("skipped",name, tags)
       return
     else
       Trello.postAsync("/lists/#{list.id}/cards",
-          { 'name': name, 'desc': card.description, 'pos': index })
+          { 'name': name, 'desc': card.description, 'pos': index, 'due': expectedDate })
       .then((trelloCard) ->
         log.debug("Created card '#{name}'")
         root.starboard.progress += 1
