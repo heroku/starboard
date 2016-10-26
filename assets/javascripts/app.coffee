@@ -70,7 +70,7 @@ prepareForm = (data) ->
     level = team.getPath().length
     leftpad = ""
     if level > 1
-      leftpad = Array(level).join("&nbsp;&nbsp;&nbsp;&nbsp; ")
+      leftpad = Array(level).fill('&nbsp;&nbsp;&nbsp;&nbsp; ').join('')
     {"name": team.model.id, "slug": team.model.slug, "leftpad": leftpad}
   )
   $('.controls').append ich.controls
@@ -300,7 +300,7 @@ fillBoard = (trelloBoard, lists) ->
     reorderLists(trelloBoard)
   ).then(->
     log.debug("Done building board: #{trelloBoard.url}")
-    window.location.href = trelloBoard.url
+    # window.location.href = trelloBoard.url
   ).catch((error) ->
     abortCreation("Unable to build board!", error)
   )
