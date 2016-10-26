@@ -300,7 +300,7 @@ fillBoard = (trelloBoard, lists) ->
     reorderLists(trelloBoard)
   ).then(->
     log.debug("Done building board: #{trelloBoard.url}")
-    # window.location.href = trelloBoard.url
+    window.location.href = trelloBoard.url
   ).catch((error) ->
     abortCreation("Unable to build board!", error)
   )
