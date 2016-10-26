@@ -67,7 +67,11 @@ prepareForm = (data) ->
   tree = new TreeModel()
   root.starboard.teams = tree.parse(data)
   teamnames = _.map(root.starboard.teams.all(-> true), (team) ->
-    {"name": team.model.id, "slug": team.model.slug}
+    level = team.getPath().length
+    leftpad = ""
+    if level > 1
+      leftpad = Array(level).join("&nbsp;&nbsp;&nbsp;&nbsp; ")
+    {"name": team.model.id, "slug": team.model.slug, "leftpad": leftpad}
   )
   $('.controls').append ich.controls
     'teams': teamnames,
