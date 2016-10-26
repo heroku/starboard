@@ -67,7 +67,11 @@ prepareForm = (data) ->
   tree = new TreeModel()
   root.starboard.teams = tree.parse(data)
   teamnames = _.map(root.starboard.teams.all(-> true), (team) ->
-    {"name": team.model.id, "slug": team.model.slug}
+    level = team.getPath().length
+    leftpad = ""
+    if level > 1
+      leftpad = Array(level).fill('&nbsp;&nbsp;&nbsp;&nbsp; ').join('')
+    {"name": team.model.id, "slug": team.model.slug, "leftpad": leftpad}
   )
   $('.controls').append ich.controls
     'teams': teamnames,
@@ -296,7 +300,7 @@ fillBoard = (trelloBoard, lists) ->
     reorderLists(trelloBoard)
   ).then(->
     log.debug("Done building board: #{trelloBoard.url}")
-    window.location.href = trelloBoard.url
+    # window.location.href = trelloBoard.url
   ).catch((error) ->
     abortCreation("Unable to build board!", error)
   )
