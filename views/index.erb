@@ -57,7 +57,7 @@
         <select data-placeholder="Choose a Team" name="team" id="team-name" required="required">
             <option value=""></option>
             {{#teams}}
-                <option value="{{slug}}">{{name}}</option>
+                <option value="{{slug}}">{{leftpad}}{{name}}</option>
             {{/teams}}
         </select>
     </p>
