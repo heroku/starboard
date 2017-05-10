@@ -56,7 +56,7 @@ GEM
     rack-test (0.6.2)
       rack (>= 1.0)
     rake (10.3.2)
-    rubyzip (1.1.6)
+    rubyzip (1.2.1)
     safe_yaml (1.0.4)
     sass (3.3.14)
     scrolls (0.3.8)
@@ -118,4 +118,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.12.4
+   1.14.6
