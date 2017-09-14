@@ -4,5 +4,7 @@ rvm:
 - 2.4.2
 
 bundler_args: --without=development
+notifications:
+  email: false
 
 script: 'script/ci'
