@@ -12,7 +12,6 @@
   "repository": "http://github.com/heroku/starboard",
   "logo": "https://cloud.githubusercontent.com/assets/483012/3819730/31b19ffa-1cee-11e4-9a27-8b5e62ebf7f2.png",
   "success_url": "/setup",
-  "scripts": {},
   "env": {
     "GITHUB_TOKEN": {
       "description": "A GitHub token to access the docs repo, at least [repo] scope",
@@ -41,5 +40,12 @@
   },
   "addons": [
     "memcachier"
-  ]
+  ],
+  "buildpacks": [
+    { "url": "heroku/ruby" }
+  ],
+  "scripts": {
+    "test-setup": "bundle install --with test",
+    "test": "script/ci"
+  }
 }
