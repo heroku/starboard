@@ -15,13 +15,11 @@
   "env": {
     "GITHUB_TOKEN": {
       "description": "A GitHub token to access the docs repo, at least [repo] scope",
-      "value": "",
-      "required": true
+      "required": false
     },
     "GITHUB_REPO": {
       "description": "The repository containing the guides. Use the user/repo form.",
-      "value": "",
-      "required": true
+      "required": false
     },
     "HOOK_TOKEN": {
       "description": "The hook secret for GitHub webhooks",
@@ -29,13 +27,11 @@
     },
     "TRELLO_ORGANIZATION": {
       "description": "The trello organization where boards will be created",
-      "value": "",
-      "required": true
+      "required": false
     },
     "TRELLO_KEY": {
       "description": "The trello API key",
-      "value": "",
-      "required": true
+      "required": false
     }
   },
   "addons": [
