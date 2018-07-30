@@ -1,5 +1,6 @@
 GEM
   remote: https://rubygems.org/
+  remote: https://packagecloud.io/heroku/gemgate/
   specs:
     activesupport (5.2.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
@@ -135,7 +136,7 @@ DEPENDENCIES
   dalli
   dotenv
   excon
-  git_hub_integration (= 0.1.1)
+  git_hub_integration (= 0.1.1)!
   heroku-bouncer
   minitest
   octokit
