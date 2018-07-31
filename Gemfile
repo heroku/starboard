@@ -11,7 +11,7 @@ gem "sinatra-asset-pipeline"
 gem "scrolls"
 gem "heroku-bouncer"
 gem "git_hub_integration", "0.1.1", source: "https://packagecloud.io/heroku/gemgate/"
-gem "redis-sinatra"
+gem "redis"
 gem "octokit"
 
 gem "rack-ssl"

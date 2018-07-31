@@ -79,11 +79,6 @@ GEM
     rbnacl-libsodium (1.0.16)
       rbnacl (>= 3.0.1)
     redis (4.0.1)
-    redis-sinatra (1.4.0)
-      redis-store (~> 1.1.0)
-      sinatra (~> 1.4.0)
-    redis-store (1.1.7)
-      redis (>= 2.2)
     rubyzip (1.2.1)
     safe_yaml (1.0.4)
     sass (3.3.14)
@@ -143,7 +138,7 @@ DEPENDENCIES
   puma (= 2.16.0)
   rack-ssl
   rack-test
-  redis-sinatra
+  redis
   rubyzip
   scrolls
   sinatra
