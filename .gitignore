@@ -2,3 +2,4 @@ www
 .sass-cache
 .env
 vendor/gems
+.ruby-version

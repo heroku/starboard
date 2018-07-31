@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-ruby "2.3.1"
+ruby "2.5.1"
 
 gem "sinatra"
 gem "sinatra-contrib"
@@ -10,6 +10,9 @@ gem "excon"
 gem "sinatra-asset-pipeline"
 gem "scrolls"
 gem "heroku-bouncer"
+gem "git_hub_integration", "0.1.1", source: "https://packagecloud.io/heroku/gemgate/"
+gem "redis"
+gem "octokit"
 
 gem "rack-ssl"
 

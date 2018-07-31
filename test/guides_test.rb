@@ -23,11 +23,14 @@ class GuidesTest < MiniTest::Test
   end
 
   def test_refresh_call_github
+    stub =
+      stub_request(:get, "https://api.github.com/repos/ys/markdown/zipball/master").
+      to_return(:status => 200, :body => fixture_zip.read, :headers => {})
+
     guides = Guides.new(cache)
     guides.http_client = HttpClient
     guides.refresh
-    assert_equal HttpClient.args.first, "https://api.github.com/repos/ys/markdown/zipball/master"
-    assert_equal HttpClient.args.last[:headers]["Authorization"], "token github_token"
+    assert_requested(stub)
   end
 
   def cache

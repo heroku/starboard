@@ -12,34 +12,75 @@
   "repository": "http://github.com/heroku/starboard",
   "logo": "https://cloud.githubusercontent.com/assets/483012/3819730/31b19ffa-1cee-11e4-9a27-8b5e62ebf7f2.png",
   "success_url": "/setup",
-  "scripts": {},
   "env": {
+    "GITHUB_BRANCH": {
+      "description": "Which GitHub branch to sync with",
+      "required": false,
+      "value": "master"
+    },
     "GITHUB_TOKEN": {
       "description": "A GitHub token to access the docs repo, at least [repo] scope",
-      "value": "",
-      "required": true
+      "required": false
     },
     "GITHUB_REPO": {
       "description": "The repository containing the guides. Use the user/repo form.",
-      "value": "",
-      "required": true
+      "required": false
+    },
+    "HEROKAI_ONLY": {
+      "description": "Boolean Limit access to herokai only",
+      "value": "true",
+      "required": false
+    },
+    "HEROKU_BOUNCER_SECRET": {
+      "description": "Secret for Heroku bouncer encryption",
+      "generator": "secret",
+      "required": false
+    },
+    "HEROKU_OAUTH_ID": {
+      "description": "Heroku OAuth app ID",
+      "required": false
+    },
+    "HEROKU_OAUTH_SECRET": {
+      "description": "Heroku OAuth app secret",
+      "required": false
     },
     "HOOK_TOKEN": {
       "description": "The hook secret for GitHub webhooks",
       "generator": "secret"
     },
+    "MEMCACHIER_PASSWORD": {
+      "description": "Cache add-on password",
+      "required": false
+    },
+    "MEMCACHIER_SERVERS": {
+      "description": "Cache add-on servers urls",
+      "required": false
+    },
+    "MEMCACHIER_USERNAME": {
+      "description": "Cache add-on username",
+      "required": false
+    },
+    "SESSION_SECRET": {
+      "description": "Cookie encryption secret",
+      "required": false
+    },
     "TRELLO_ORGANIZATION": {
       "description": "The trello organization where boards will be created",
-      "value": "",
-      "required": true
+      "required": false
     },
     "TRELLO_KEY": {
       "description": "The trello API key",
-      "value": "",
-      "required": true
+      "required": false
     }
   },
   "addons": [
     "memcachier"
-  ]
+  ],
+  "buildpacks": [
+    { "url": "heroku/ruby" }
+  ],
+  "scripts": {
+    "test-setup": "bundle install --with test",
+    "test": "script/ci"
+  }
 }

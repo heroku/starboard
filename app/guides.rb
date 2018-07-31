@@ -37,7 +37,7 @@ class Guides
   def guides_file
     unless @guides_file
       f = Tempfile.new('zip')
-      f << zip_response.body
+      f << zip_response
       f.flush
       f.close
       @guides_file = f
@@ -47,7 +47,10 @@ class Guides
 
   def zip_response
     branch = ENV['GITHUB_BRANCH'] || 'master'
-    response = http_client.get("https://api.github.com/repos/#{ENV['GITHUB_REPO']}/zipball/#{branch}", headers: { "Authorization" => 'token ' + ENV['GITHUB_TOKEN'], "User-Agent" => "Starboard-heroku"})
+    client = GitHubIntegration.client
+    url = "https://api.github.com/repos/#{ENV['GITHUB_REPO']}/zipball/#{branch}"
+    response =
+      client.get(url)
     response
   end
 end
