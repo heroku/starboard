@@ -2,12 +2,13 @@ GEM
   remote: https://rubygems.org/
   remote: https://packagecloud.io/heroku/gemgate/
   specs:
-    activesupport (5.2.0)
+    activesupport (5.2.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    addressable (2.4.0)
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
     backports (3.6.4)
     coffee-script (2.3.0)
       coffee-script-source
@@ -25,7 +26,7 @@ GEM
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.25)
-    git_hub_integration (0.1.2)
+    git_hub_integration (0.1.4)
       activesupport
       jwt (= 1.5.1)
       octokit (= 4.6.2)
@@ -39,10 +40,10 @@ GEM
       rack (>= 1.0, < 3)
       sinatra (>= 1.0, < 3)
     hike (1.2.3)
-    i18n (1.0.1)
+    i18n (1.1.0)
       concurrent-ruby (~> 1.0)
     jwt (1.5.1)
-    minitest (5.8.3)
+    minitest (5.11.3)
     multi_json (1.13.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
@@ -63,6 +64,7 @@ GEM
     omniauth-oauth2 (1.5.0)
       oauth2 (~> 1.1)
       omniauth (~> 1.2)
+    public_suffix (3.0.3)
     puma (2.16.0)
     rack (1.6.10)
     rack-protection (1.5.5)
@@ -74,7 +76,7 @@ GEM
     rake (10.3.2)
     rbnacl (5.0.0)
       ffi
-    redis (4.0.1)
+    redis (4.0.2)
     rubyzip (1.2.1)
     safe_yaml (1.0.4)
     sass (3.3.14)
@@ -127,7 +129,7 @@ DEPENDENCIES
   dalli
   dotenv
   excon
-  git_hub_integration (= 0.1.2)!
+  git_hub_integration (= 0.1.4)!
   heroku-bouncer
   minitest
   octokit
