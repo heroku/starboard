@@ -66,7 +66,7 @@ GEM
       omniauth (~> 1.2)
     public_suffix (3.0.3)
     puma (2.16.0)
-    rack (1.6.10)
+    rack (1.6.11)
     rack-protection (1.5.5)
       rack
     rack-ssl (1.4.1)
@@ -145,7 +145,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 2.5.1p57
+   ruby 2.5.3p105
 
 BUNDLED WITH
-   1.16.1
+   1.17.1
