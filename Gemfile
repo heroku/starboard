@@ -18,6 +18,7 @@ gem "rack-ssl"
 
 group "development", "test" do
   gem "dotenv"
+  gem "pry-byebug"
 end
 
 group "test" do
