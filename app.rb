@@ -24,16 +24,16 @@ class App < Sinatra::Base
     ENV["MEMCACHE_PASSWORD"] = ENV["MEMCACHIER_PASSWORD"] if ENV["MEMCACHIER_PASSWORD"]
   end
 
+  set :cache, Dalli::Client.new
+  set :assets_precompile, %w(app.js screen.css *.ttf *.woff)
+  enable :sessions
+  set :session_secret, ENV["SESSION_SECRET"]
+
   configure do
     # # Setup Sprockets
     sprockets.append_path File.join(root, "assets", "stylesheets")
     sprockets.append_path File.join(root, "assets", "javascripts")
   end
-
-  set :cache, Dalli::Client.new
-  set :assets_precompile, %w(app.js screen.css)
-  enable :sessions
-  set :session_secret, ENV["SESSION_SECRET"]
 
   configure :production, :development do
     use ::Heroku::Bouncer,
