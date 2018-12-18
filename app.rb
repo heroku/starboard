@@ -11,7 +11,7 @@ class App < Sinatra::Base
   register Sinatra::AssetPipeline
 
   set :ssl, lambda { !(development? || test?) }
-  use Rack::SSL, exclude: ->(env){ !ssl? }
+  use Rack::SSL, exclude: -> (env) { !ssl? }
 
   configure :development do
     require "dotenv"
@@ -19,7 +19,7 @@ class App < Sinatra::Base
   end
 
   configure :production do
-    ENV["MEMCACHE_SERVERS"]  = ENV["MEMCACHIER_SERVERS"]  if ENV["MEMCACHIER_SERVERS"]
+    ENV["MEMCACHE_SERVERS"] = ENV["MEMCACHIER_SERVERS"] if ENV["MEMCACHIER_SERVERS"]
     ENV["MEMCACHE_USERNAME"] = ENV["MEMCACHIER_USERNAME"] if ENV["MEMCACHIER_USERNAME"]
     ENV["MEMCACHE_PASSWORD"] = ENV["MEMCACHIER_PASSWORD"] if ENV["MEMCACHIER_PASSWORD"]
   end
@@ -29,12 +29,18 @@ class App < Sinatra::Base
   enable :sessions
   set :session_secret, ENV["SESSION_SECRET"]
 
+  configure do
+    # Setup Sprockets
+    sprockets.append_path File.join(root, "assets", "stylesheets")
+    sprockets.append_path File.join(root, "assets", "javascripts")
+  end
+
   configure :production, :development do
     use ::Heroku::Bouncer,
-            oauth: { id: ENV["HEROKU_OAUTH_ID"], secret: ENV["HEROKU_OAUTH_SECRET"] },
-            secret: ENV["HEROKU_BOUNCER_SECRET"],
-            herokai_only: true,
-            skip: ->(env) { ENV["HEROKAI_ONLY"] != "true" || env['PATH_INFO'] == '/guides' }
+        oauth: {id: ENV["HEROKU_OAUTH_ID"], secret: ENV["HEROKU_OAUTH_SECRET"]},
+        secret: ENV["HEROKU_BOUNCER_SECRET"],
+        herokai_only: true,
+        skip: -> (env) { ENV["HEROKAI_ONLY"] != "true" || env["PATH_INFO"] == "/guides" }
   end
 
   Excon.defaults[:middlewares] << Excon::Middleware::RedirectFollower
@@ -45,7 +51,7 @@ class App < Sinatra::Base
   end
 
   get "/" do
-    erb :index, locals: { organization: organization, token: token }
+    erb :index, locals: {organization: organization, token: token}
   end
 
   get "/guides/*" do
