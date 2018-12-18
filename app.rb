@@ -25,7 +25,7 @@ class App < Sinatra::Base
   end
 
   set :cache, Dalli::Client.new
-  set :assets_precompile, %w(app.js screen.css *.ttf *.woff)
+  set :assets_precompile, %w(app.js screen.css)
   enable :sessions
   set :session_secret, ENV["SESSION_SECRET"]
 
