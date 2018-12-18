@@ -77,7 +77,7 @@
     "memcachier"
   ],
   "buildpacks": [
-    { "url": "https://github.com/heroku/heroku-buildpack-ruby#v196" }
+    { "url": "heroku/ruby" }
   ],
   "scripts": {
     "test-setup": "bundle install --with test",
