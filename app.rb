@@ -30,7 +30,7 @@ class App < Sinatra::Base
   set :session_secret, ENV["SESSION_SECRET"]
 
   configure do
-    # # Setup Sprockets
+    # Setup Sprockets
     sprockets.append_path File.join(root, "assets", "stylesheets")
     sprockets.append_path File.join(root, "assets", "javascripts")
   end

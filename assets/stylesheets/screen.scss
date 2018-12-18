@@ -6,17 +6,17 @@
 
 
 @include font-face($font-family: "Benton Sans",
-                   $file-path: "../fonts/bentonsans-book",
+                   $file-path: "/fonts/bentonsans-book",
                    $weight: 400,
                    $style: normal);
 
 @include font-face($font-family: "Benton Sans",
-                   $file-path: "../fonts/bentonsans-regular",
+                   $file-path: "/fonts/bentonsans-regular",
                    $weight: 500,
                    $style: normal);
 
 @include font-face($font-family: "Benton Sans",
-                   $file-path: "../fonts/bentonsans-medium",
+                   $file-path: "/fonts/bentonsans-medium",
                    $weight: 600,
                    $style: normal);
 
