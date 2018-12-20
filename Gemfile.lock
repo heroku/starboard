@@ -72,7 +72,7 @@ GEM
       byebug (~> 10.0)
       pry (~> 0.10)
     public_suffix (3.0.3)
-    puma (2.16.0)
+    puma (3.12.0)
     rack (2.0.6)
     rack-protection (2.0.4)
       rack
@@ -144,7 +144,7 @@ DEPENDENCIES
   minitest
   octokit
   pry-byebug
-  puma (= 2.16.0)
+  puma
   rack-ssl
   rack-test
   redis

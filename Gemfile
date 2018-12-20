@@ -3,7 +3,7 @@ ruby "2.5.3"
 
 gem "sinatra", "~>2.0.2"
 gem "sinatra-contrib"
-gem "puma", "2.16.0"
+gem "puma"
 gem "dalli"
 gem "rubyzip"
 gem "excon"
