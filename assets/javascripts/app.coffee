@@ -368,7 +368,7 @@ createCheckItems = (checklist) ->
   _.map(checklist.items, (item, index) ->
     Trello.postAsync("/checklists/#{checklist.id}/checkItems",
                   { "name": item, 'pos': index })
-      .then((checkItem) ->
+      .then(->
         log.debug ("Created checkItem '#{item}'")
         root.starboard.progress += 1
         $('progress').attr('value', root.starboard.progress)
