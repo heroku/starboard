@@ -290,11 +290,9 @@ fillBoard = (trelloBoard, lists) ->
     , Promise.resolve()).then(-> checkLists)
   ).then((checkLists) ->
     console.log("checkLists", checkLists)
-    items = []
     checkLists.reduce( (acc, list) ->
       acc.then(-> Promise.all(createCheckItems(list)))
-         .then((listItems) -> items = items.concat listItems)
-    , Promise.resolve()).then(-> Promise.all(items))
+    , Promise.resolve())
   ).then(->
     log.debug("Ordering the lists", lists)
     reorderLists(trelloBoard)
