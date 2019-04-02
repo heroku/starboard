@@ -366,7 +366,7 @@ createCheckItems = (checklist) ->
   _.reduce(checklist.items, (promise, item, index) ->
     promise.then(->
       Trello.postAsync("/checklists/#{checklist.id}/checkItems",
-                    { "name": item, 'pos': index })
+                    { "name": item, 'pos': index + 1 })
       .then(->
         log.debug ("Created checkItem '#{item}'")
         root.starboard.progress += 1
