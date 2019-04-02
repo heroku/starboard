@@ -290,11 +290,9 @@ fillBoard = (trelloBoard, lists) ->
     , Promise.resolve()).then(-> checkLists)
   ).then((checkLists) ->
     console.log("checkLists", checkLists)
-    items = []
     checkLists.reduce( (acc, list) ->
-      acc.then(-> Promise.all(createCheckItems(list)))
-         .then((listItems) -> items = items.concat listItems)
-    , Promise.resolve()).then(-> Promise.all(items))
+      acc.then(-> createCheckItems(list))
+    , Promise.resolve())
   ).then(->
     log.debug("Ordering the lists", lists)
     reorderLists(trelloBoard)
@@ -365,15 +363,17 @@ createCheckLists = (card) ->
   )
 
 createCheckItems = (checklist) ->
-  _.map(checklist.items, (item, index) ->
-    Trello.postAsync("/checklists/#{checklist.id}/checkItems",
-                  { "name": item, 'pos': index })
-      .then((checkItem) ->
+  _.reduce(checklist.items, (promise, item, index) ->
+    promise.then(->
+      Trello.postAsync("/checklists/#{checklist.id}/checkItems",
+                    { "name": item, 'pos': index })
+      .then(->
         log.debug ("Created checkItem '#{item}'")
         root.starboard.progress += 1
         $('progress').attr('value', root.starboard.progress)
       ).catch(-> log.error("Unable to create checkItem '#{item}"))
-  )
+    )
+  , Promise.resolve())
 
 
 # JSONify raw markdown
