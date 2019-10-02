@@ -79,8 +79,13 @@
   "buildpacks": [
     { "url": "heroku/ruby" }
   ],
-  "scripts": {
-    "test-setup": "bundle install --with test",
-    "test": "script/ci"
+  "environments": {
+    "test": {
+      "addons": [],
+      "scripts": {
+        "test-setup": "bundle install --with test",
+        "test": "script/ci"
+      }
+    }
   }
 }
