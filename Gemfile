@@ -12,7 +12,7 @@ gem "scrolls"
 gem "heroku-bouncer"
 gem "git_hub_integration", "0.1.4", source: "https://packagecloud.io/heroku/gemgate/"
 gem "redis"
-gem "octokit"
+gem "octokit", ">= 4.6.2"
 
 gem "rack-ssl"
 
@@ -24,5 +24,5 @@ end
 group "test" do
   gem "minitest"
   gem "rack-test"
-  gem "webmock"
+  gem "webmock", ">= 3.4.2"
 end
