@@ -1,0 +1,58 @@
+name: Send Information to Workflow
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'components-info/*.json'
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - 'main'
+    paths:
+      - 'components-info/*.json'
+
+jobs:
+
+  get-json-files:
+    runs-on: sfdc-hk-ubuntu-latest
+    outputs:
+      json-data: ${{ steps.get-json-files.outputs.JSON_DATA }}
+      ispr: ${{ steps.determineworkflow.outputs.IS_PULLR }}
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+            path: './'
+      - name: determine_workflow
+        id: determineworkflow
+        if: github.event.pull_request && (github.event.action == 'opened' || github.event.action == 'synchronize')
+        run: |
+          echo "IS_PULLR=true" >> $GITHUB_OUTPUT
+      - name: Get JSON files
+        id: get-json-files
+        run: |
+          cd './components-info'
+          jq -s '.' *.json > joined.json
+          echo "JSON_DATA=$(jq -c . < joined.json)" >> $GITHUB_OUTPUT
+  call-workflow-passing-data:
+    needs: get-json-files
+    strategy:
+      matrix:
+        json: ${{ fromJson(needs.get-json-files.outputs.json-data) }}
+    permissions:
+      contents: read
+      pull-requests: write
+    uses: heroku/components-inventory-yamls/.github/workflows/workflow-to-components.yml@main
+    with:
+      repo:  ${{ github.repository }}
+      name:  ${{ matrix.json.name }}
+      file:  ${{ toJSON(matrix.json) }}
+      is_pr:  ${{ needs.get-json-files.outputs.ispr }}
+    secrets:
+      token: ${{secrets.COMPONENTS_GHA_JSON_TOKEN}}
+      app_id: ${{ secrets.HEROKU_STANDARDS_APP_ID }}
+      private_key: ${{ secrets.HEROKU_STANDARDS_APP_PRIVATE_KEY }}
