@@ -2,7 +2,7 @@ source "https://rubygems.org"
 ruby "2.7.5"
 
 gem "sinatra", "~>2.0.2"
-gem "sinatra-contrib"
+gem "sinatra-contrib", ">= 2.0.5"
 gem "puma"
 gem "dalli"
 gem "rubyzip"
